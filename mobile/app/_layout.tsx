@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { Provider } from 'react-redux';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SplashScreen from 'expo-splash-screen';
 import {
   useFonts,
@@ -57,7 +58,9 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <Provider store={store}>
           <ThemeProvider>
-            <RootNavigation />
+            <BottomSheetModalProvider>
+              <RootNavigation />
+            </BottomSheetModalProvider>
           </ThemeProvider>
         </Provider>
       </SafeAreaProvider>

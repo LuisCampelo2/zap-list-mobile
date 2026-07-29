@@ -44,11 +44,29 @@ zap-list-mobile/
 > `server/src/scripts/seedProducts.js` para quem quiser rodar contra um banco
 > novo/vazio.
 
-**Ainda não implementado** (próximas fases): listas de compras (CRUD, swipe
-actions, reordenação, cálculo de preço), produtos recentes/populares (dependem
-do histórico de uso das listas), dashboard (resumo/insights), configurações de
-perfil, scraping de preços (cron + Puppeteer), notificações push, biometria,
-testes automatizados, CI/CD.
+### Fase 3 — Listas de compras (em andamento)
+
+- **Server**: `ShoppingList` e `ShoppingListProduct` (mapeados nas tabelas
+  reais `shoppinglists`/`shoppinglistproducts`, 11 listas / 299 itens
+  existentes). `GET/POST /lists`, `DELETE /lists/:id`, `GET/POST
+  /lists/:id/items`, `PATCH/DELETE /lists/:id/items/:itemId`. Preço total
+  recalculado a cada mudança (mesma fórmula do original: preço por KG ×
+  peso médio para produtos vendidos a granel). Validação de quantidade
+  inteira para produtos não vendidos por KG, bloqueio de produto duplicado
+  na mesma lista, e — diferente do original — todas as rotas exigem dono da
+  lista autenticado (o endpoint de adicionar produto não tinha nenhuma
+  autenticação antes).
+- **Mobile**: aba Listas (criar/ver listas reais com contagem de itens e
+  total), tela de detalhe da lista (marcar comprado, remover item), e um
+  bottom sheet "Adicionar à lista" acionado direto da tela de Produtos
+  (escolher lista existente ou criar uma nova, ajustar quantidade — inteira
+  ou fracionada conforme a unidade do produto).
+
+**Ainda não implementado**: swipe actions e arrastar-para-reordenar nos itens
+da lista, produtos recentes/populares (dependem do histórico de uso das
+listas), dashboard (resumo/insights), configurações de perfil, scraping de
+preços (cron + Puppeteer), notificações push, biometria, testes
+automatizados, CI/CD.
 
 ## Rodando localmente
 

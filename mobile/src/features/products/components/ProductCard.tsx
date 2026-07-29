@@ -1,6 +1,6 @@
 import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Heart } from 'lucide-react-native';
+import { Heart, Plus } from 'lucide-react-native';
 import * as Haptics from 'expo-haptics';
 import { config } from '../../../constants/config';
 import { formatCurrency, unitLabel } from '../../../utils/currency';
@@ -10,9 +10,10 @@ import type { Product } from '../../../types/product';
 type ProductCardProps = {
   product: Product;
   onToggleFavorite: (id: number) => void;
+  onAddToList: (product: Product) => void;
 };
 
-export function ProductCard({ product, onToggleFavorite }: ProductCardProps) {
+export function ProductCard({ product, onToggleFavorite, onAddToList }: ProductCardProps) {
   const { colors } = useTheme();
 
   return (
@@ -44,6 +45,19 @@ export function ProductCard({ product, onToggleFavorite }: ProductCardProps) {
             color={product.isFavorite ? colors.error : colors.textSecondary}
             fill={product.isFavorite ? colors.error : 'transparent'}
           />
+        </Pressable>
+
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={`Adicionar ${product.name} a uma lista`}
+          hitSlop={10}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            onAddToList(product);
+          }}
+          className="absolute bottom-1 right-1 rounded-full bg-primary p-1.5"
+        >
+          <Plus size={16} color="#FFFFFF" />
         </Pressable>
       </View>
 

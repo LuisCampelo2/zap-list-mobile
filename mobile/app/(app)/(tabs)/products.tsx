@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { RefreshControl, ScrollView, Text, View } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { PackageSearch } from 'lucide-react-native';
 import { Chip, EmptyState, Screen, SearchBar, Skeleton } from '../../../src/components/ui';
 import { ProductCard } from '../../../src/features/products/components/ProductCard';
+import { AddToListSheet, type AddToListSheetHandle } from '../../../src/features/lists/components/AddToListSheet';
 import { useProductSearch } from '../../../src/features/products/hooks/useProductSearch';
 import { useGetProductsQuery, useToggleFavoriteMutation } from '../../../src/services/api/productsApi';
 
@@ -26,6 +27,7 @@ export default function ProductsScreen() {
   const [toggleFavorite] = useToggleFavoriteMutation();
   const { query, setQuery, category, setCategory, favoritesOnly, setFavoritesOnly, results } =
     useProductSearch(products);
+  const addToListSheetRef = useRef<AddToListSheetHandle>(null);
 
   const categories = useMemo(
     () => Array.from(new Set(products.map((p) => p.category))).sort(),
@@ -68,7 +70,11 @@ export default function ProductsScreen() {
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         renderItem={({ item }) => (
           <View style={{ flex: 1, paddingHorizontal: 6 }}>
-            <ProductCard product={item} onToggleFavorite={(id) => toggleFavorite(id)} />
+            <ProductCard
+              product={item}
+              onToggleFavorite={(id) => toggleFavorite(id)}
+              onAddToList={(product) => addToListSheetRef.current?.present(product)}
+            />
           </View>
         )}
         refreshControl={<RefreshControl refreshing={isFetching && !isLoading} onRefresh={refetch} />}
@@ -80,6 +86,8 @@ export default function ProductsScreen() {
           />
         }
       />
+
+      <AddToListSheet ref={addToListSheetRef} />
     </Screen>
   );
 }

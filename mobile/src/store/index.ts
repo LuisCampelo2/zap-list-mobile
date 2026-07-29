@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '../services/api/authApi';
 import { productsApi } from '../services/api/productsApi';
+import { listsApi } from '../services/api/listsApi';
 import { injectStore } from '../services/api/client';
 import { authReducer } from './slices/authSlice';
 
@@ -9,9 +10,10 @@ export const store = configureStore({
     auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
+    [listsApi.reducerPath]: listsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, productsApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, productsApi.middleware, listsApi.middleware),
 });
 
 // Dá ao client Axios acesso ao token atual e a como disparar logout,
