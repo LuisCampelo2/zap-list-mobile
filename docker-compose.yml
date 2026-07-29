@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: zap_list_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PGDATABASE:-zaplist}
+      POSTGRES_USER: ${PGUSER:-postgres}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-postgres}
+    ports:
+      # Host 5433 -> container 5432: evita conflito com um Postgres nativo já
+      # rodando na porta 5432 do Windows (ex: instância do projeto Zap-List original).
+      - '5433:5432'
+    volumes:
+      - zap_list_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  zap_list_postgres_data:

@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "Zap List",
+    "slug": "zap-list",
+    "scheme": "zaplist",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zaplist.app"
+    },
+    "android": {
+      "package": "com.zaplist.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#FFF8EE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFF8EE",
+          "image": "./assets/splash-icon.png",
+          "dark": {
+            "backgroundColor": "#181310"
+          }
+        }
+      ],
+      "expo-font",
+      "expo-local-authentication",
+      [
+        "expo-notifications",
+        {
+          "color": "#FF7A00"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
